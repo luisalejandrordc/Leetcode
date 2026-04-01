@@ -34,14 +34,13 @@ class Solution:
         curr = dummy
         total, carry = 0, 0
         while l1 is not None or l2 is not None or carry != 0:
-            total = 0
+            total = carry
             if l1:
                 total += l1.val
                 l1 = l1.next
             if l2:
                 total += l2.val
                 l2 = l2.next
-            total += carry
             if total >= 10:
                 total -= 10
                 carry = 1
@@ -52,7 +51,7 @@ class Solution:
         return dummy.next
 
 
-def create_linked_list(elements: list[int]) -> ListNode | None:
+def create_linked_list(elements: list[int]) -> Optional[ListNode]:
     dummy = ListNode()
     curr = dummy
     for x in elements:
