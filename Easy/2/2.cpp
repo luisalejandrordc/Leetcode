@@ -11,34 +11,64 @@ struct ListNode {
   ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
+// class Solution {
+// public:
+//   ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
+//     ListNode *head = new ListNode();
+//     ListNode *curr = head;
+//     int carry = 0;
+//     while (l1 != nullptr || l2 != nullptr || carry != 0) {
+//       if (l1) {
+//         curr->val += l1->val;
+//         l1 = l1->next;
+//       }
+//       if (l2) {
+//         curr->val += l2->val;
+//         l2 = l2->next;
+//       }
+//       curr->val += carry;
+//       if (curr->val >= 10) {
+//         curr->val = curr->val - 10;
+//         carry = 1;
+//       } else {
+//         carry = 0;
+//       }
+//       if (l1 != nullptr || l2 != nullptr || carry != 0) {
+//         curr->next = new ListNode();
+//       }
+//       curr = curr->next;
+//     }
+//     return head;
+//   }
+// };
+
 class Solution {
 public:
   ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
     ListNode *head = new ListNode();
     ListNode *curr = head;
-    int carry = 0;
+    int sum = 0, carry = 0;
     while (l1 != nullptr || l2 != nullptr || carry != 0) {
+      sum = 0;
       if (l1) {
-        curr->val += l1->val;
+        sum += l1->val;
         l1 = l1->next;
       }
       if (l2) {
-        curr->val += l2->val;
+        sum += l2->val;
         l2 = l2->next;
       }
-      curr->val += carry;
-      if (curr->val >= 10) {
-        curr->val = curr->val - 10;
+      sum += carry;
+      if (sum >= 10) {
+        sum = sum - 10;
         carry = 1;
       } else {
         carry = 0;
       }
-      if (l1 != nullptr || l2 != nullptr || carry != 0) {
-        curr->next = new ListNode();
-      }
+      curr->next = new ListNode(sum);
       curr = curr->next;
     }
-    return head;
+    return head->next;
   }
 };
 
