@@ -10,6 +10,7 @@
 // Return the head of the modified linked list.
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -21,7 +22,51 @@ struct ListNode {
   ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
+class Solution {
+public:
+  ListNode *mergeNodes(ListNode *head) {
+    ListNode *curr1 = head->next;
+    ListNode *dummy = new ListNode();
+    ListNode *curr2 = dummy;
+    int sum = 0;
+    while (curr1 != nullptr) {
+      if (curr1->val == 0) {
+        curr2->next = new ListNode(sum);
+        curr2 = curr2->next;
+        sum = 0;
+      } else {
+        sum += curr1->val;
+      }
+      curr1 = curr1->next;
+    }
+    return dummy->next;
+  }
+};
+
+ListNode *create_linked_list(vector<int> elements) {
+  ListNode *dummy = new ListNode();
+  ListNode *curr = dummy;
+  for (int i = 0; i < elements.size(); i++) {
+    curr->next = new ListNode(elements[i]);
+    curr = curr->next;
+  }
+  return dummy->next;
+}
+
+void print_linked_list(ListNode *head) {
+  ListNode *curr = head;
+  while (curr != nullptr) {
+    cout << curr->val << "\t";
+    curr = curr->next;
+  }
+  cout << endl;
+}
+
 int main() {
   cout << "It's showtime folks!" << endl;
+  ListNode *input = create_linked_list({0, 3, 1, 0, 4, 5, 2, 0});
+  ListNode *output = Solution().mergeNodes(input);
+  print_linked_list(input);
+  print_linked_list(output);
   return 0;
 }
