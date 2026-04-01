@@ -11,7 +11,7 @@ from typing import Optional
 
 # Definition for singly-linked list.
 class ListNode:
-    def __init__(self, val=0, next=None):
+    def __init__(self, val: int = 0, next: Optional[ListNode] = None):
         self.val = val
         self.next = next
 
@@ -25,48 +25,44 @@ class ListNode:
                 break
         return "\t".join(elements)
 
-    def append(self, val):
-        node = self
-        while True:
-            if node.next is None:
-                node.next = val
-                return
-            node = node.next
-
 
 class Solution:
     def addTwoNumbers(
         self, l1: Optional[ListNode], l2: Optional[ListNode]
     ) -> Optional[ListNode]:
-        if l1 is None:
-            return l2
-        if l2 is None:
-            return l1
-        result = ListNode(l1.val + l2.val)
-        node1 = l1.next
-        node2 = l2.next
-        add = 0
-        while True:
-            if node1 is not None and node2 is not None:
-                s = node1.val + node2.val
-                val = s if s < 10 else s - 10
-                result.append(ListNode(val + add))
-                add = 0 if s < 10 else 1
-                node1 = node1.next
-                node2 = node2.next
-            elif node1 is None and node2 is not None:
-                result.append(ListNode(node2.val + add))
-                add = 0
-                node2 = node2.next
-            elif node2 is None and node1 is not None:
-                result.append(ListNode(node1.val + add))
-                add = 0
-                node1 = node1.next
+        dummy = ListNode()
+        curr = dummy
+        total, carry = 0, 0
+        while l1 is not None or l2 is not None or carry != 0:
+            total = 0
+            if l1:
+                total += l1.val
+                l1 = l1.next
+            if l2:
+                total += l2.val
+                l2 = l2.next
+            total += carry
+            if total >= 10:
+                total -= 10
+                carry = 1
             else:
-                break
-        return result
+                carry = 0
+            curr.next = ListNode(total)
+            curr = curr.next
+        return dummy.next
 
 
-l1 = ListNode(2, ListNode(4, ListNode(3)))
-l2 = ListNode(5, ListNode(6, ListNode(4)))
+def create_linked_list(elements: list[int]) -> ListNode | None:
+    dummy = ListNode()
+    curr = dummy
+    for x in elements:
+        curr.next = ListNode(x)
+        curr = curr.next
+    return dummy.next
+
+
+l1 = create_linked_list([9, 9, 9, 9, 9, 9, 9])
+l2 = create_linked_list([9, 9, 9, 9])
+print(l1)
+print(l2)
 print(Solution().addTwoNumbers(l1, l2))
