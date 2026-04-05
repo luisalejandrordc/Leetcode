@@ -1,34 +1,58 @@
+// 980. Unique Paths III
+// You are given an m x n integer array grid where grid[i][j] could be:
+// 1 representing the starting square. There is exactly one starting square.
+// 2 representing the ending square. There is exactly one ending square.
+// 0 representing empty squares we can walk over.
+// -1 representing obstacles that we cannot walk over.
+// Return the number of 4-directional walks from the starting square to the
+// ending square, that walk over every non-obstacle square exactly once.
+
 #include <iostream>
+#include <utility>
 #include <vector>
 
 using namespace std;
 
 const int DIRECTIONS[4][2] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+const int EMPTY = 0;
+const int START = 1;
+const int END = 2;
+const int OBSTACLE = -1;
 
-bool is_completed(vector<vector<int>> &grid, int &m, int &n) {
-  for (int i = 0; i < m; i++)
-    for (int j = 0; j < n; j++)
-      if (grid[i][j] == 0)
-        return 0;
-  return 1;
+pair<int, int> findStart(vector<vector<int>> &grid, pair<int, int> &size) {
+  for (int i = 0; i < size.first; i++)
+    for (int j = 0; j < size.second; j++)
+      if (grid[i][j] == START)
+        return {i, j};
+  return {-1, -1};
 }
 
-void four_directions(vector<vector<int>> grid, int &m, int &n, int row, int col,
-                     int &total) {
+int countEmptyCells(vector<vector<int>> &grid, pair<int, int> &size) {
+  int count = 0;
+  for (int i = 0; i < size.first; i++)
+    for (int j = 0; j < size.second; j++)
+      if (grid[i][j] == EMPTY)
+        count++;
+  return count;
+}
+
+// DFS (Depth-First Search) vs BFS (Breath-First Search)
+void dfs(vector<vector<int>> &grid, pair<int, int> &size, pair<int, int> coords,
+         int empty, int &total) {
   int i, j;
   for (int k = 0; k < 4; k++) {
-    i = row + DIRECTIONS[k][0];
-    j = col + DIRECTIONS[k][1];
-    if ((i >= 0 && i < m) && (j >= 0 && j < n))
-      if (grid[i][j] != -1 && grid[i][j] != 1) {
-        if (grid[i][j] == 2 && is_completed(grid, m, n)) {
-          total += 1;
-        }
+    i = coords.first + DIRECTIONS[k][0];
+    j = coords.second + DIRECTIONS[k][1];
+    if (i >= 0 && i < size.first && j >= 0 && j < size.second)
+      if (grid[i][j] != START && grid[i][j] != OBSTACLE) {
+        if (grid[i][j] == 2 && empty == 0)
+          total++;
         if (grid[i][j] == 0) {
           // cout << "(" << i << "," << j << ")" << endl;
-          vector<vector<int>> new_grid = grid;
-          new_grid[i][j] = 1;
-          four_directions(new_grid, m, n, i, j, total);
+          int temp = grid[i][j];
+          grid[i][j] = OBSTACLE;
+          dfs(grid, size, {i, j}, empty - 1, total);
+          grid[i][j] = temp;
         }
       }
   }
@@ -37,22 +61,11 @@ void four_directions(vector<vector<int>> grid, int &m, int &n, int row, int col,
 class Solution {
 public:
   int uniquePathsIII(vector<vector<int>> &grid) {
-    int m = grid.size();
-    int n = grid[0].size();
-    int row = -1, col = -1;
-    for (int i = 0; i < m; i++) {
-      for (int j = 0; j < n; j++) {
-        if (grid[i][j] == 1) {
-          row = i;
-          col = j;
-          break;
-        }
-      }
-      if (row != -1)
-        break;
-    }
+    pair<int, int> size = {grid.size(), grid[0].size()};
+    pair<int, int> coords = findStart(grid, size);
+    int empty = countEmptyCells(grid, size);
     int total = 0;
-    four_directions(grid, m, n, row, col, total);
+    dfs(grid, size, coords, empty, total);
     return total;
   }
 };
