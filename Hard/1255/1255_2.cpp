@@ -98,28 +98,24 @@ public:
 
 int main() {
   cout << "It's Showtime Folks!" << endl;
-  vector<string> words = {"e", "bac", "baeba", "eb", "bbbbd", "cad", "c", "c"};
-  vector<char> letters = {'a', 'a', 'a', 'a', 'a', 'a', 'a', 'b', 'b', 'b',
-                          'b', 'b', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'd',
-                          'd', 'd', 'd', 'd', 'd', 'd', 'e', 'e', 'e', 'e'};
-  vector<int> score = {8, 4, 6, 8, 5, 0, 0, 0, 0, 0, 0, 0, 0,
-                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-  words = {"daeagfh", "acchggghfg", "feggd",  "fhdch",   "dbgadcchfg",
-           "b",       "db",         "fgchfe", "baaedddc"};
-  letters = {'a', 'a', 'a', 'a', 'a', 'a', 'a', 'b', 'b', 'b', 'b', 'b', 'b',
-             'b', 'b', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c',
-             'c', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
-             'd', 'd', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'f',
-             'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f',
-             'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'h',
-             'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h'};
-  score = {2, 1, 9, 2, 10, 5, 7, 8, 0, 0, 0, 0, 0,
-           0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0};
+  vector<string> words = {"daeagfh", "acchggghfg", "feggd",
+                          "fhdch",   "dbgadcchfg", "b",
+                          "db",      "fgchfe",     "baaedddc"};
+  vector<char> letters = {
+      'a', 'a', 'a', 'a', 'a', 'a', 'a', 'b', 'b', 'b', 'b', 'b', 'b',
+      'b', 'b', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c',
+      'c', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
+      'd', 'd', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'f',
+      'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f',
+      'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'h',
+      'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h'};
+  vector<int> score = {2, 1, 9, 2, 10, 5, 7, 8, 0, 0, 0, 0, 0,
+                       0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0};
   auto start = chrono::high_resolution_clock::now();
   cout << "Solution: " << Solution().maxScoreWords(words, letters, score)
        << endl;
   auto end = chrono::high_resolution_clock::now();
-  chrono::duration<double, milli> duration = end - start;
-  cout << "Function took " << duration.count() << " ms to execute." << endl;
+  chrono::duration<double, milli> elapsedTime = end - start;
+  cout << "Elapsed Time: " << elapsedTime.count() << " ms" << endl;
   return 0;
 }

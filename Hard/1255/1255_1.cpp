@@ -40,29 +40,29 @@ int getWordScore(const vector<int> &word, const vector<int> &score) {
   return wordScore;
 }
 
-class Solution {
-public:
-  int dfs(int i, vector<vector<int>> &words, vector<int> &letters,
-          vector<int> &score) {
-    if (i == words.size())
-      return 0;
+int dfs(int i, vector<vector<int>> &words, vector<int> &letters,
+        vector<int> &score) {
+  if (i == words.size())
+    return 0;
 
-    int maxScore = dfs(i + 1, words, letters, score);
-    int wordScore = getWordScore(words[i], score);
+  int maxScore = dfs(i + 1, words, letters, score);
+  int wordScore = getWordScore(words[i], score);
 
-    if (isValidWord(words[i], letters)) {
-      for (int j = 0; j < 26; j++)
-        letters[j] -= words[i][j];
+  if (isValidWord(words[i], letters)) {
+    for (int j = 0; j < 26; j++)
+      letters[j] -= words[i][j];
 
-      maxScore = max(maxScore, wordScore + dfs(i + 1, words, letters, score));
+    maxScore = max(maxScore, wordScore + dfs(i + 1, words, letters, score));
 
-      for (int j = 0; j < 26; j++) // backtrack
-        letters[j] += words[i][j];
-    }
-
-    return maxScore;
+    for (int j = 0; j < 26; j++) // backtrack
+      letters[j] += words[i][j];
   }
 
+  return maxScore;
+}
+
+class Solution {
+public:
   int maxScoreWords(vector<string> &words, vector<char> &letters,
                     vector<int> &score) {
     vector<vector<int>> newWords = getNewWords(words);
@@ -73,17 +73,24 @@ public:
 
 int main() {
   cout << "It's Showtime Folks!" << endl;
-  vector<string> words = {"e", "bac", "baeba", "eb", "bbbbd", "cad", "c", "c"};
-  vector<char> letters = {'a', 'a', 'a', 'a', 'a', 'a', 'a', 'b', 'b', 'b',
-                          'b', 'b', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'd',
-                          'd', 'd', 'd', 'd', 'd', 'd', 'e', 'e', 'e', 'e'};
-  vector<int> score = {8, 4, 6, 8, 5, 0, 0, 0, 0, 0, 0, 0, 0,
-                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  vector<string> words = {"daeagfh", "acchggghfg", "feggd",
+                          "fhdch",   "dbgadcchfg", "b",
+                          "db",      "fgchfe",     "baaedddc"};
+  vector<char> letters = {
+      'a', 'a', 'a', 'a', 'a', 'a', 'a', 'b', 'b', 'b', 'b', 'b', 'b',
+      'b', 'b', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c',
+      'c', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
+      'd', 'd', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'f',
+      'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f',
+      'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'h',
+      'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h'};
+  vector<int> score = {2, 1, 9, 2, 10, 5, 7, 8, 0, 0, 0, 0, 0,
+                       0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0};
   auto start = chrono::high_resolution_clock::now();
   cout << "Solution: " << Solution().maxScoreWords(words, letters, score)
        << endl;
   auto end = chrono::high_resolution_clock::now();
-  chrono::duration<double, milli> duration = end - start;
-  cout << "Function took " << duration.count() << " ms to execute." << endl;
+  chrono::duration<double, milli> elapsedTime = end - start;
+  cout << "Elapsed Time: " << elapsedTime.count() << " ms" << endl;
   return 0;
 }

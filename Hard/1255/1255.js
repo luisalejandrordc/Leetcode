@@ -82,10 +82,46 @@ var maxScoreWords = function (words, letters, score) {
   return dfs(0, words, letters, score);
 };
 
-words = ["dog", "cat", "dad", "good"];
-letters = ["a", "a", "c", "d", "d", "d", "g", "o", "o"];
-score = [
-  1, 0, 9, 5, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+const start = new Date();
+
+const words = ["e", "bac", "baeba", "eb", "bbbbd", "cad", "c", "c"];
+const letters = [
+  "a",
+  "a",
+  "a",
+  "a",
+  "a",
+  "a",
+  "a",
+  "b",
+  "b",
+  "b",
+  "b",
+  "b",
+  "b",
+  "c",
+  "c",
+  "c",
+  "c",
+  "c",
+  "c",
+  "d",
+  "d",
+  "d",
+  "d",
+  "d",
+  "d",
+  "d",
+  "e",
+  "e",
+  "e",
+  "e",
+];
+const score = [
+  8, 4, 6, 8, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 ];
 
 console.log(`Solution: ${maxScoreWords(words, letters, score)}`);
+
+const elapsedTime = new Date() - start;
+console.log(`Elapsed Time: ${elapsedTime} ms`);
