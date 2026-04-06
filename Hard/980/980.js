@@ -89,10 +89,14 @@ var uniquePathsIII = function (grid) {
 
 console.log("It's Showtime Folks!");
 
-let grid = [
-  [1, 0, 0, 0],
-  [0, 0, 0, 0],
-  [0, 0, 2, -1],
-];
+// let grid = [
+//   [1, 0, 0, 0],
+//   [0, 0, 0, 0],
+//   [0, 0, 2, -1],
+// ];
+
+let grid = new Array(5).fill().map(() => new Array(4).fill(0));
+grid[0][0] = 1;
+grid[4][3] = 2;
 let result = uniquePathsIII(grid);
 console.log(`Result: ${result}`);

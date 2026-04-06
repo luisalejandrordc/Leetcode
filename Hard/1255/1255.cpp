@@ -91,7 +91,7 @@ public:
         max_score = result[all_words[i]];
       }
     }
-    print_unordered_map(result);
+    // print_unordered_map(result);
     return max_score;
   }
 };
@@ -104,6 +104,22 @@ int main() {
                           'd', 'd', 'd', 'd', 'd', 'd', 'e', 'e', 'e', 'e'};
   vector<int> score = {8, 4, 6, 8, 5, 0, 0, 0, 0, 0, 0, 0, 0,
                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-  cout << Solution().maxScoreWords(words, letters, score) << endl;
+  words = {"daeagfh", "acchggghfg", "feggd",  "fhdch",   "dbgadcchfg",
+           "b",       "db",         "fgchfe", "baaedddc"};
+  letters = {'a', 'a', 'a', 'a', 'a', 'a', 'a', 'b', 'b', 'b', 'b', 'b', 'b',
+             'b', 'b', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c',
+             'c', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
+             'd', 'd', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'f',
+             'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f',
+             'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'h',
+             'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h'};
+  score = {2, 1, 9, 2, 10, 5, 7, 8, 0, 0, 0, 0, 0,
+           0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0};
+  auto start = chrono::high_resolution_clock::now();
+  cout << "Solution: " << Solution().maxScoreWords(words, letters, score)
+       << endl;
+  auto end = chrono::high_resolution_clock::now();
+  chrono::duration<double, milli> duration = end - start;
+  cout << "Function took " << duration.count() << " ms to execute." << endl;
   return 0;
 }
