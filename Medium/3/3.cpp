@@ -2,7 +2,10 @@
 // Given a string s, find the length of the longest
 // substring without duplicate characters.
 
+#include <chrono>
+#include <ctime>
 #include <iostream>
+#include <string>
 #include <unordered_map>
 #include <vector>
 
@@ -62,17 +65,34 @@ using namespace std;
 //   }
 // };
 
+// class Solution {
+// public:
+//   int lengthOfLongestSubstring(string s) {
+//     unordered_map<char, int> visited;
+//     int l = 0, highest = 0;
+//     for (int r = 0; r < s.size(); r++) {
+//       if (visited.count(s[r]) && visited[s[r]] >= l) {
+//         l = visited[s[r]] + 1;
+//       }
+//       visited[s[r]] = r;
+//       highest = max(highest, r - l + 1);
+//     }
+//     return highest;
+//   }
+// };
+
 class Solution {
 public:
   int lengthOfLongestSubstring(string s) {
     unordered_map<char, int> visited;
-    int l = 0, highest = 0;
-    for (int r = 0; r < s.size(); r++) {
+    int r = 0, l = 0, highest = 0;
+    while (r < s.size() && s.size() - l > highest) {
       if (visited.count(s[r]) && visited[s[r]] >= l) {
         l = visited[s[r]] + 1;
       }
       visited[s[r]] = r;
       highest = max(highest, r - l + 1);
+      r++;
     }
     return highest;
   }
@@ -81,6 +101,10 @@ public:
 int main() {
   cout << "It's Showtime Folks!" << endl;
   string s = "abcabcbb";
+  auto start = chrono::high_resolution_clock::now();
   cout << "Solution: " << Solution().lengthOfLongestSubstring(s) << endl;
+  auto end = chrono::high_resolution_clock::now();
+  chrono::duration<double, milli> elapsedTime = end - start;
+  cout << "ElapsedTime: " << elapsedTime.count() << endl;
   return 0;
 }

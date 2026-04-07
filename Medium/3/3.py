@@ -32,4 +32,5 @@ class Solution:
 
 
 s = "abcabcbb"
+s = "abcaefghibjkclmnopqraastuvwxyzABCDEFFGHIJKLMMNOPQRSTUUVWXYYZ0123456789!@#abcaefghibjkclmnopq"
 print(f"Solution: {Solution().lengthOfLongestSubstring(s)}")
