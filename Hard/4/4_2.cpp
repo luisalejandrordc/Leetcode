@@ -8,12 +8,6 @@
 
 using namespace std;
 
-void printVector(vector<int> arr) {
-  for (int i : arr)
-    cout << i << "\t";
-  cout << endl;
-}
-
 double getMedian(const vector<int> &arr) {
   int s = arr.size();
   if (s % 2 == 0) {
