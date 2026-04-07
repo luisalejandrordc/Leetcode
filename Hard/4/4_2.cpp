@@ -8,42 +8,39 @@
 
 using namespace std;
 
-vector<int> mergeArrays(const vector<int> &arr1, const vector<int> &arr2) {
-  vector<int> merged;
-  merged.reserve(arr1.size() + arr2.size());
-  merged.insert(merged.begin(), arr1.begin(), arr1.end());
-  merged.insert(merged.begin(), arr2.begin(), arr2.end());
-  return merged;
-}
-
-vector<int> sortArray(vector<int> arr) {
-  int idx = 0;
-  while (idx < arr.size() - 1) {
-    if (arr[idx] > arr[idx + 1]) {
-      int temp = arr[idx];
-      arr[idx] = arr[idx + 1];
-      arr[idx + 1] = temp;
-      if (idx != 0)
-        idx--;
-    } else {
-      idx++;
-    }
-  }
-  return arr;
+void printVector(vector<int> arr) {
+  for (int i : arr)
+    cout << i << "\t";
+  cout << endl;
 }
 
 double getMedian(const vector<int> &arr) {
-  vector<int> sorted = sortArray(arr);
-  if (sorted.size() % 2 == 0) {
-    return (sorted[sorted.size() / 2 - 1] + sorted[sorted.size() / 2]) / 2.0;
+  int s = arr.size();
+  if (s % 2 == 0) {
+    return (arr[s / 2 - 1] + arr[s / 2]) / 2.0;
   }
-  return sorted[(sorted.size() - 1) / 2];
+  return arr[(s - 1) / 2];
 }
 
 class Solution {
 public:
   double findMedianSortedArrays(vector<int> &nums1, vector<int> &nums2) {
-    vector<int> merged = mergeArrays(nums1, nums2);
+    int size = nums1.size() + nums2.size();
+    int i1 = 0, i2 = 0;
+    vector<int> merged;
+    merged.reserve(size);
+
+    while (i1 < nums1.size() && i2 < nums2.size()) {
+      if (nums1[i1] > nums2[i2])
+        merged.push_back(nums2[i2++]);
+      else
+        merged.push_back(nums1[i1++]);
+    }
+    while (i1 < nums1.size())
+      merged.push_back(nums1[i1++]);
+    while (i2 < nums2.size())
+      merged.push_back(nums2[i2++]);
+
     return getMedian(merged);
   }
 };
