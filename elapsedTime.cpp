@@ -8,17 +8,23 @@ int addNumbers(const int &a, const int &b) {
   return a + b;
 }
 
-void printElapsedTime(const int &a, const int &b,
+double getElapsedTime(const int &a, const int &b,
                       int(myFunction)(const int &, const int &)) {
   auto start = chrono::high_resolution_clock::now();
-  cout << "Inputs: " << a << " - " << b << endl;
-  cout << "Output: " << myFunction(a, b) << endl; // Execution
+  int output = myFunction(a, b); // Execution
+  // cout << "Inputs: " << a << " - " << b << endl;
+  // cout << "Output: " << output << endl;
   auto end = chrono::high_resolution_clock::now();
   chrono::duration<double, milli> elapsedTime = end - start;
-  cout << "Elapsed Time: " << elapsedTime.count() << endl;
+  return elapsedTime.count();
 }
 
 int main() {
-  printElapsedTime(12, 18, addNumbers);
+  double totalTime = 0;
+  int num = 1000;
+  for (int i = 0; i < num; i++)
+    totalTime += getElapsedTime(12, 18, addNumbers);
+  cout << "Total Elapsed Time: " << totalTime << " ms" << endl;
+  cout << "Average Elapsed Time: " << totalTime / num << " ms" << endl;
   return 0;
 }

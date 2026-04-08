@@ -83,7 +83,7 @@ void printElapsedTime(double(func)(vector<int> &, vector<int> &)) {
   auto start = chrono::high_resolution_clock::now();
   vector<int> nums1 = {1, 2};
   vector<int> nums2 = {3, 4};
-  cout << "Soltion: " << func(nums1, nums2) << endl;
+  cout << "Solution: " << func(nums1, nums2) << endl;
   auto end = chrono::high_resolution_clock::now();
   chrono::duration<double, milli> elapsedTime = end - start;
   cout << "Elapsed Time: " << elapsedTime.count() << " ms" << endl;
