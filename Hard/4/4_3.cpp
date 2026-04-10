@@ -4,14 +4,13 @@
 // The overall run time complexity should be O(log (m+n)).
 
 #include <chrono>
-#include <functional>
 #include <iostream>
 #include <queue>
 #include <vector>
 
 using namespace std;
 
-void addToQueue(queue<int> &queue, int x) {
+void addToQueue(queue<int> &queue, const int &x) {
   if (queue.size() == 2)
     queue.pop();
   queue.push(x);
@@ -48,21 +47,6 @@ queue<int> getMediums(const vector<int> &nums1, const vector<int> &nums2,
   return mediums;
 }
 
-double getMedian(const vector<int> &arr) {
-  int s = arr.size();
-  if (s % 2 == 0) {
-    return (arr[s / 2 - 1] + arr[s / 2]) / 2.0;
-  }
-  return arr[(s - 1) / 2];
-}
-
-double findMedianSortedArrays(vector<int> &nums1, vector<int> &nums2) {
-  int size = nums1.size() + nums2.size();
-  queue<int> mediums = getMediums(nums1, nums2, size);
-  return size % 2 == 0 ? (mediums.back() + mediums.front()) / 2.0
-                       : mediums.back();
-}
-
 class Solution {
 public:
   double findMedianSortedArrays(vector<int> &nums1, vector<int> &nums2) {
@@ -72,22 +56,6 @@ public:
                          : mediums.back();
   }
 };
-
-double test(vector<int> &nums1, vector<int> &nums2) {
-  int size = nums1.size() + nums2.size();
-  queue<int> mediums = getMediums(nums1, nums2, size);
-  return size % 2 == 0 ? (mediums.back() + mediums.front()) / 2.0
-                       : mediums.back();
-}
-void printElapsedTime(double(func)(vector<int> &, vector<int> &)) {
-  auto start = chrono::high_resolution_clock::now();
-  vector<int> nums1 = {1, 2};
-  vector<int> nums2 = {3, 4};
-  cout << "Solution: " << func(nums1, nums2) << endl;
-  auto end = chrono::high_resolution_clock::now();
-  chrono::duration<double, milli> elapsedTime = end - start;
-  cout << "Elapsed Time: " << elapsedTime.count() << " ms" << endl;
-}
 
 int main() {
   cout << "It's Showtime Folks!" << endl;
@@ -101,7 +69,5 @@ int main() {
   auto end = chrono::high_resolution_clock::now();
   chrono::duration<double, milli> elapsedTime = end - start;
   cout << "Time Elapsed: " << elapsedTime.count() << " ms" << endl;
-  cout << endl;
-  printElapsedTime(test);
   return 0;
 }
