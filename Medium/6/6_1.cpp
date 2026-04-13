@@ -27,11 +27,11 @@ public:
     ans.resize(numRows);
     int nC = numRows > 1
                  ? s.length() -
-                       (numRows - 1) * ceil(s.length() / (2 * (numRows - 1)))
+                       (numRows - 1) * ceil(s.length() / (2.0 * (numRows - 1)))
                  : s.length();
-    cout << endl << nC << " " << ceil(s.length() / (2 * (numRows - 1))) << endl;
+    cout << endl << nC;
     for (int i = 0; i < numRows; i++)
-      ans[i].resize(nC);
+      ans[i].resize(s.length());
     int k = 0, i = 0, j = 0;
     bool reset = false;
     while (k < s.length()) {
