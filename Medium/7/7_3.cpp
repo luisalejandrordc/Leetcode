@@ -1,26 +1,22 @@
-#include <cmath>
+#include <climits>
 #include <iostream>
 
 using namespace std;
-
-int getNumberDigits(int x) {
-  int count = 0;
-  while (true) {
-    x = x / 10;
-    count++;
-    if (x == 0)
-      break;
-  }
-  return count;
-}
 
 class Solution {
 public:
   int reverse(int x) {
     int ans = 0;
-    int numDigits = getNumberDigits(x);
-    for (int i = 0; i < numDigits; i++) {
-      ans += (x % 10) * pow(10, numDigits - 1 - i);
+    while (x != 0) {
+      int digit = x % 10;
+
+      // Checking int overflow [-2147483648, 2147483647]
+      if (ans > INT_MAX / 10 || (ans == INT_MAX / 10 && digit > 7))
+        return 0;
+      if (ans < INT_MIN / 10 || (ans == INT_MIN / 10 && digit < -8))
+        return 0;
+
+      ans = ans * 10 + (x % 10);
       x /= 10;
     }
     return ans;
