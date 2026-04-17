@@ -27,5 +27,6 @@ int main() {
   cout << "It's Showtime Folks!" << endl;
   cout << "Solution: " << Solution().reverse(123) << endl;
   cout << "Solution: " << Solution().reverse(-12) << endl;
+  cout << "Solution: " << Solution().reverse(1534236469) << endl;
   return 0;
 }
