@@ -17,9 +17,9 @@ class Solution:
             if c in DIGITS:
                 started = True
                 digit = int(c) if not negative else -int(c)
-                if num > INT_MAX / 10 or (num == int(INT_MAX / 10) and digit > 7):
+                if num > POS_LIM or (num == POS_LIM and digit > 7):
                     return INT_MAX
-                if num < INT_MIN / 10 or (num == int(INT_MIN / 10) and digit < -8):
+                if num < NEG_LIM or (num == NEG_LIM and digit < -8):
                     return INT_MIN
                 num = num * 10 + digit
             elif c == "+" and not started:
