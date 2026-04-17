@@ -21,11 +21,10 @@ class Solution:
                     return INT_MIN
                 num = num * 10 + digit
             elif c == "+" and not started:
-                negative = False
                 started = True
             elif c == "-" and not started:
-                negative = True
                 started = True
+                negative = True
             else:
                 break
         return num
