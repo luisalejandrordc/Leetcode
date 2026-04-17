@@ -1,6 +1,8 @@
 # 32-bit signed integer limits
 INT_MIN = -2147483648
 INT_MAX = 2147483647
+POS_LIM = int(INT_MAX / 10)
+NEG_LIM = int(INT_MIN / 10)
 DIGITS = {str(x) for x in range(10)}
 
 

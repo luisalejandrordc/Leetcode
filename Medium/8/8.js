@@ -1,3 +1,8 @@
+// 32-bit signed integer limits
+INT_MIN = -2147483648;
+INT_MAX = 2147483647;
+POS_LIM = Math.trunc(INT_MAX / 10);
+NEG_LIM = Math.trunc(INT_MIN / 10);
 const DIGITS = new Set(
   Array(10)
     .fill(0)
@@ -16,20 +21,19 @@ var myAtoi = function (s) {
     if (c == " " && !started) continue;
     if (DIGITS.has(c)) {
       started = true;
-      let digit = Number(c);
+      let digit = !negative ? Number(c) : -Number(c);
+      if (num > POS_LIM || (num == POS_LIM && digit > 7)) return INT_MAX;
+      if (num < NEG_LIM || (num == NEG_LIM && digit < -8)) return INT_MIN;
       num = num * 10 + digit;
-    } else if (c == "-") {
+    } else if (c == "-" && !started) {
       negative = true;
       started = true;
-    } else if (c == "+") {
+    } else if (c == "+" && !started) {
       started = true;
     } else return num;
   }
   return num;
 };
-
-// let nums = new Array(20).fill(0).map((n, i) => i + 1);
-// for (n of nums) console.log(n);
 
 console.log("It's Showtime Folks!");
 console.log(`Solution: ${myAtoi("123")}`);
