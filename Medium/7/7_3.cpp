@@ -28,5 +28,6 @@ int main() {
   cout << "Solution: " << Solution().reverse(123) << endl;
   cout << "Solution: " << Solution().reverse(-12) << endl;
   cout << "Solution: " << Solution().reverse(1534236469) << endl;
+  cout << "Solution: " << Solution().reverse(10) << endl;
   return 0;
 }
