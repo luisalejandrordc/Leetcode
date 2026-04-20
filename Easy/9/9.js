@@ -7,9 +7,8 @@ var isPalindrome = function (x) {
   const num = x;
   let rev = 0;
   while (x != 0) {
-    digit = x % 10;
     // There is no need to verify that the number is within the 32-bit limit
-    rev = rev * 10 + digit;
+    rev = rev * 10 + (x % 10);
     x = Math.trunc(x / 10);
   }
   return num == rev;
