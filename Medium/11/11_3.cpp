@@ -10,8 +10,10 @@ public:
     int maxAreaVar = 0;
     int l = 0;
     for (int i = 1; i < height.size(); i++) {
-      if (height[i] - height[l] > i - l)
+      if (height[i] - height[l] > i - l) {
+        cout << i << endl;
         l = i;
+      }
       maxAreaVar = max(maxAreaVar, min(height[l], height[i]) * (i - l));
     }
     return maxAreaVar;
