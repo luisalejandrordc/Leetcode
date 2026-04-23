@@ -8,15 +8,15 @@ class Solution {
 public:
   int maxArea(const vector<int> &height) {
     int maxAreaVar = 0;
-    int curAreaVar = 0;
     int l = 0, r = height.size() - 1;
     while (l < r) {
-      curAreaVar = min(height[l], height[r]) * (r - l);
-      maxAreaVar = max(maxAreaVar, curAreaVar);
+      int w = r - l;
+      int h = min(height[l], height[r]);
+      maxAreaVar = max(maxAreaVar, w * h);
       if (height[l] < height[r])
-        l = l + 1;
+        l++;
       else
-        r = r - 1;
+        r--;
     }
     return maxAreaVar;
   }
