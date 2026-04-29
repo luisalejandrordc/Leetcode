@@ -5,9 +5,9 @@ using namespace std;
 
 int getMinLength(vector<string> &strs) {
   int min = INT_MAX;
-  for (string c : strs)
-    if (c.length() < min)
-      min = c.length();
+  for (string s : strs)
+    if (s.length() < min)
+      min = s.length();
   return min;
 }
 
