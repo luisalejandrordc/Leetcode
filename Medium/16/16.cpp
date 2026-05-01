@@ -20,11 +20,10 @@ public:
           bestSum = sum;
         if (sum == target)
           return target;
-        else if (sum > target) {
+        if (sum > target)
           r--;
-        } else {
+        else
           l++;
-        }
       }
     }
     return bestSum;
