@@ -4,7 +4,7 @@ function threeSum(nums: number[]): number[][] {
   let ans: number[][] = [];
   const len = nums.length;
   nums.sort((a, b) => a - b);
-  for (let i = 0; i < len; i++) {
+  for (let i = 0; i < len - 2; i++) {
     if (i > 0 && nums[i] == nums[i - 1]) continue;
     let l = i + 1;
     let r = len - 1;
