@@ -9,7 +9,7 @@ function threeSumClosest(nums: number[], target: number): number {
     let l = i + 1;
     let r = len - 1;
     while (l < r) {
-      let sum = nums[i] + nums[l] + nums[r];
+      const sum = nums[i] + nums[l] + nums[r];
       if (Math.abs(sum - target) < Math.abs(bestSum - target)) bestSum = sum;
       if (sum == target) return target;
       if (sum < target) l++;
