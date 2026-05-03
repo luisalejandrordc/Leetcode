@@ -1,4 +1,5 @@
 #include <iostream>
+#include <utility>
 #include <vector>
 
 using namespace std;
@@ -10,24 +11,24 @@ void printVector(vector<int> &nums) {
   cout << nums[nums.size() - 1] << "]" << endl;
 }
 
+void backtrack(vector<int> &nums, int a, vector<vector<int>> &result) {
+  if (a == nums.size() - 1) {
+    result.push_back(nums);
+    return;
+  }
+  for (int b = a; b < nums.size(); b++) {
+    swap(nums[a], nums[b]);
+    backtrack(nums, a + 1, result);
+    swap(nums[a], nums[b]);
+  }
+}
+
 class Solution {
 public:
   vector<vector<int>> permute(vector<int> &nums) {
-    // Base condition
-    if (nums.size() == 0)
-      return {{}};
-    // Recursion
-    vector<vector<int>> ans;
-    for (int i = 0; i < nums.size(); i++) {
-      int temp = nums[i];
-      nums.erase(nums.begin() + i);
-      for (vector<int> v : permute(nums)) {
-        v.insert(v.begin(), temp);
-        ans.push_back(v);
-      }
-      nums.insert(nums.begin() + i, temp);
-    }
-    return ans;
+    vector<vector<int>> result;
+    backtrack(nums, 0, result);
+    return result;
   }
 };
 
