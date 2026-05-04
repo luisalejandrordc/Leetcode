@@ -18,7 +18,7 @@ function isValid(s: string): boolean {
       history.pop();
     } else history.push(c);
   }
-  return history.length === 0 ? true : false;
+  return history.length === 0;
 }
 
 console.log("It's Showtime Folks!");

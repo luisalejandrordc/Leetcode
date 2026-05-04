@@ -20,7 +20,7 @@ public:
       } else
         history.push(c);
     }
-    return history.empty() ? true : false;
+    return history.empty();
   }
 };
 
