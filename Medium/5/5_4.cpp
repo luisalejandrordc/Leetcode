@@ -1,37 +1,39 @@
+#include <chrono>
 #include <iostream>
+#include <utility>
 
 using namespace std;
 
-string getOddPalindrome(const string &s, const int &idx) {
+pair<int, int> getOddPalindrome(const string &s, const int &idx) {
   int n = 1;
   int len = s.length();
   while (idx - n >= 0 && idx + n < len && s[idx - n] == s[idx + n])
     n++;
   n--;
-  return s.substr(idx - n, 2 * n + 1);
+  return {idx - n, 2 * n + 1};
 }
 
-string getEvenPalindrome(const string &s, const int &idx) {
+pair<int, int> getEvenPalindrome(const string &s, const int &idx) {
   int n = 0;
   int len = s.length();
   while (idx - n >= 0 && idx + 1 + n < len && s[idx - n] == s[idx + 1 + n])
     n++;
   n--;
-  return s.substr(idx - n, 2 * (n + 1));
+  return {idx - n, 2 * (n + 1)};
 }
 
 class Solution {
 public:
   string longestPalindrome(const string &s) {
-    string pal = "";
-    for (int i = 0; i < s.length() - (pal.length() + 1) / 2; i++) {
-      string odd = getOddPalindrome(s, i);
-      string even = getEvenPalindrome(s, i);
-      string longest = odd.length() > even.length() ? odd : even;
-      if (longest.length() > pal.length())
+    pair<int, int> pal = {0, 0};
+    for (int i = 0; i < s.length() - (pal.second + 1) / 2; i++) {
+      pair<int, int> odd = getOddPalindrome(s, i);
+      pair<int, int> even = getEvenPalindrome(s, i);
+      pair<int, int> longest = odd.second > even.second ? odd : even;
+      if (longest.second > pal.second)
         pal = longest;
     }
-    return pal;
+    return s.substr(pal.first, pal.second);
   }
 };
 
