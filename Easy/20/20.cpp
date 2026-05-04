@@ -5,7 +5,6 @@
 
 using namespace std;
 
-unordered_set<char> openBrackets = {'(', '[', '{'};
 unordered_map<char, char> closeToOpen = {{')', '('}, {']', '['}, {'}', '{'}};
 
 class Solution {
@@ -14,13 +13,12 @@ public:
     // Last open bracket must be the first to be closed (LIFO)
     stack<char> history;
     for (char c : s) {
-      if (openBrackets.count(c))
-        history.push(c);
-      else {
+      if (closeToOpen.count(c)) {
         if (history.empty() || history.top() != closeToOpen[c])
           return false;
         history.pop();
-      }
+      } else
+        history.push(c);
     }
     return history.empty() ? true : false;
   }
