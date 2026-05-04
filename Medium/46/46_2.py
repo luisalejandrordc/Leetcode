@@ -1,3 +1,6 @@
+import math
+
+
 def backtrack(nums: list[int], a: int, result: list[list[int]]):
     if a == len(nums) - 1:
         result.append(nums.copy())
@@ -16,4 +19,7 @@ class Solution:
 
 
 print("It's Showtime Folks!")
-print(Solution().permute([1, 2, 3]))
+nums = [1, 2, 3]
+result = Solution().permute(nums)
+print(result)
+print(len(result) == math.factorial(len(nums)))
