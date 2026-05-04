@@ -3,24 +3,25 @@
 
 using namespace std;
 
-int getMinLength(vector<string> &strs) {
-  int min = INT_MAX;
-  for (string s : strs)
-    if (s.length() < min)
-      min = s.length();
-  return min;
+int getMinLength(vector<string> &words) {
+  int minLength = INT_MAX;
+  for (string s : words)
+    minLength = min(minLength, int(s.length()));
+  return minLength;
 }
 
 class Solution {
 public:
-  string longestCommonPrefix(vector<string> &strs) {
+  string longestCommonPrefix(vector<string> &words) {
+    if (words.size() == 1)
+      return words[0];
     string s = "";
-    int min = getMinLength(strs);
-    for (int k = 0; k < min; k++) {
-      for (int i = 0; i < strs.size() - 1; i++)
-        if (strs[i][k] != strs[i + 1][k])
+    int minLength = getMinLength(words);
+    for (int i = 0; i < minLength; i++) {
+      for (int j = 1; j < words.size(); j++)
+        if (words[j][i] != words[j - 1][i])
           return s;
-      s += strs[0][k];
+      s += words[0][i];
     }
     return s;
   }
@@ -30,6 +31,8 @@ int main() {
   cout << "It's Showtime Folks!" << endl;
   Solution s;
   vector<string> strs = {"flower", "flow", "flight"};
+  cout << "Solution: " << s.longestCommonPrefix(strs) << endl;
+  strs = {"keys", "keyboard", "keywords"};
   cout << "Solution: " << s.longestCommonPrefix(strs) << endl;
   strs = {"dog", "racecar", "car"};
   cout << "Solution: " << s.longestCommonPrefix(strs) << endl;
