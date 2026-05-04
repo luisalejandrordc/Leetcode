@@ -28,8 +28,8 @@ bool dfs(vector<vector<char>> &board, string &word, int m, int n, int x, int y,
 class Solution {
 public:
   bool exist(vector<vector<char>> &board, string word) {
-    int m = board.size();
-    int n = board[0].size();
+    const int m = board.size();
+    const int n = board[0].size();
     for (int i = 0; i < m; i++)
       for (int j = 0; j < n; j++)
         if (dfs(board, word, m, n, i, j, 0))
