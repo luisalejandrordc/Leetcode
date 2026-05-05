@@ -39,6 +39,8 @@ function reverseList(head: ListNode | null): ListNode | null {
   return reversed;
 }
 
+console.log("It's Showtime Folks!");
+
 const nums = [1, 2, 3, 4, 5];
 const head = arrayToLinkedList(nums);
 printLinkedList(head);
