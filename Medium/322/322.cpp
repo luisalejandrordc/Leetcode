@@ -30,14 +30,13 @@ int recs(vector<int> &coins, int idx, int amount,
 
 int coinChange(vector<int> &coins, int amount) {
   sort(coins.begin(), coins.end(), greater<>());
+  // key: <idx, amount> , value: <result>
   unordered_map<pair<int, int>, int, PairHash<int, int>> history;
   return recs(coins, 0, amount, history);
 }
 
-// This solution is technically correct, it scans all possible ways
-// to make up the given amount, but it takes too much time, because
-// of multiple repetitions of recursion states instead of saving
-// those previous results and resuing them
+// Correct, but inefficient: it recomputes the same recursive states
+// Memoization would avoid repeated work and improve performance
 int recs3(vector<int> &coins, int idx, int amount) {
   int quantity = amount / coins[idx];
   int remainder = amount - quantity * coins[idx];
@@ -67,10 +66,13 @@ int coinChange3(vector<int> &coins, int amount) {
 int recs2(vector<int> &coins, int idx, int amount) {
   int quantity = amount / coins[idx];
   int remainder = amount - quantity * coins[idx];
+  // Base case 1: Exact division
   if (remainder == 0)
     return quantity;
+  // Base case 2: Last index
   if (idx == coins.size() - 1)
     return -1;
+  // Analize all paths for each possible quantity
   while (quantity >= 0) {
     int counter = recs2(coins, idx + 1, remainder);
     if (counter != -1)
@@ -78,6 +80,7 @@ int recs2(vector<int> &coins, int idx, int amount) {
     remainder += coins[idx];
     quantity--;
   }
+  // Couldn't make up the amount
   return -1;
 }
 
@@ -88,8 +91,8 @@ int coinChange2(vector<int> &coins, int amount) {
 
 // This solution does not consider all possible ways to make up the amount
 // It is restricted by taking away the largest coins from amount without
-// considering that maybe taking less or even none of them could end up
-// making up the amount successfully
+// considering that taking less or even none of it might end up making up
+// the amount successfully
 int coinChange1(vector<int> &coins, int amount) {
   sort(coins.begin(), coins.end(), greater<>());
   int counter = 0;
