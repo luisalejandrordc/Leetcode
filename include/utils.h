@@ -1,4 +1,5 @@
 #pragma once
+#include <chrono>
 #include <cstddef>
 #include <functional>
 #include <iostream>
@@ -21,6 +22,17 @@ template <typename T> inline void printVector(const std::vector<T> &vec) {
     std::cout << vec[i];
   }
   std::cout << "}" << std::endl;
+}
+
+template <typename Func, typename... Args>
+inline auto timedCall(Func &&func, Args &&...args) {
+  auto start = std::chrono::steady_clock::now();
+  auto result =
+      std::invoke(std::forward<Func>(func), std::forward<Args>(args)...);
+  auto end = std::chrono::steady_clock::now();
+  auto elapsed =
+      std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+  std::cout << "Execution time: " << elapsed.count() << " us" << std::endl;
 }
 
 template <typename T1, typename T2> struct PairHash {

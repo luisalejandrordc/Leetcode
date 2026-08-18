@@ -106,5 +106,6 @@ int main() {
   vector<int> coins = {288, 160, 10, 249, 40, 77, 314, 429};
   int amount = 9208;
   cout << "Solution: " << coinChange(coins, amount) << endl;
+
   return 0;
 }
