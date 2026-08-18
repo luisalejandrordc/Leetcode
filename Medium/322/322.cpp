@@ -1,11 +1,14 @@
 #include "../../include/utils.h"
 #include <functional>
 #include <iostream>
+#include <unordered_map>
+#include <utility>
 #include <vector>
 
 using namespace std;
 
-int recs(vector<int> &coins, int idx, int amount) {
+int recs(vector<int> &coins, int idx, int amount,
+         unordered_map<pair<int, int>, int, PairHash<int, int>> &history) {
   int quantity = amount / coins[idx];
   int remainder = amount - quantity * coins[idx];
   if (remainder == 0)
@@ -14,9 +17,11 @@ int recs(vector<int> &coins, int idx, int amount) {
     return -1;
   int result = INT_MAX;
   while (quantity >= 0) {
-    int counter = recs(coins, idx + 1, remainder);
-    if (counter != -1)
-      result = min(result, counter);
+    pair<int, int> next = {idx + 1, remainder};
+    if (!history.count(next))
+      history[next] = recs(coins, next.first, next.second, history);
+    if (history.at(next) != -1)
+      result = min(result, history.at(next) + quantity);
     remainder += coins[idx];
     quantity--;
   }
@@ -25,7 +30,8 @@ int recs(vector<int> &coins, int idx, int amount) {
 
 int coinChange(vector<int> &coins, int amount) {
   sort(coins.begin(), coins.end(), greater<>());
-  return recs(coins, 0, amount);
+  unordered_map<pair<int, int>, int, PairHash<int, int>> history;
+  return recs(coins, 0, amount, history);
 }
 
 // This solution is technically correct, it scans all possible ways
@@ -43,7 +49,7 @@ int recs3(vector<int> &coins, int idx, int amount) {
   while (quantity >= 0) {
     int counter = recs3(coins, idx + 1, remainder);
     if (counter != -1)
-      result = min(result, counter);
+      result = min(result, counter + quantity);
     remainder += coins[idx];
     quantity--;
   }
@@ -97,8 +103,8 @@ int coinChange1(vector<int> &coins, int amount) {
 
 int main() {
   printTitle("Coin Change");
-  vector<int> coins = {4, 3, 1};
-  int amount = 6;
-  cout << "Solution : " << coinChange(coins, amount) << endl;
+  vector<int> coins = {288, 160, 10, 249, 40, 77, 314, 429};
+  int amount = 9208;
+  cout << "Solution: " << coinChange(coins, amount) << endl;
   return 0;
 }
