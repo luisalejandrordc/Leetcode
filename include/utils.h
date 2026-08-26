@@ -33,6 +33,7 @@ inline auto timedCall(Func &&func, Args &&...args) {
   auto elapsed =
       std::chrono::duration_cast<std::chrono::microseconds>(end - start);
   std::cout << "Execution time: " << elapsed.count() << " us" << std::endl;
+  return result;
 }
 
 template <typename T1, typename T2> struct PairHash {
