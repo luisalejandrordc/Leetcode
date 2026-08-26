@@ -7,6 +7,7 @@
 
 using namespace std;
 
+// PairHash is a custum hashing function
 int recs(vector<int> &coins, int idx, int amount,
          unordered_map<pair<int, int>, int, PairHash<int, int>> &history) {
   int quantity = amount / coins[idx];
