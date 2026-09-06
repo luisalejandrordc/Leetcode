@@ -88,17 +88,6 @@ template <typename T>
 inline constexpr bool is_unordered_set_v = is_unordered_set<T>{};
 
 //----------------------------------
-// PRINT TITLE FUNCTION
-//----------------------------------
-
-inline void printTitle(const std::string &title) {
-  std::string dashes(title.length() + 10, '-');
-  std::cout << dashes << std::endl;
-  std::cout << "|    " << title << "    |" << std::endl;
-  std::cout << dashes << std::endl;
-}
-
-//----------------------------------
 // GENERAL PRINT FUNCTION
 //----------------------------------
 template <typename T> inline void print(const T &value, bool addNewLine = true);
@@ -171,6 +160,21 @@ template <typename T> inline void print(const T &value, bool addNewLine) {
   if (addNewLine)
     std::cout << std::endl;
 }
+
+//----------------------------------
+// PRINT TITLE FUNCTION
+//----------------------------------
+
+inline void printTitle(const std::string &title) {
+  std::string dashes(title.length() + 10, '-');
+  std::cout << dashes << std::endl;
+  std::cout << "|    " << title << "    |" << std::endl;
+  std::cout << dashes << std::endl;
+}
+
+//----------------------------------
+// TIMED CALL FUNCTION
+//----------------------------------
 
 template <typename Func, typename... Args>
 inline auto timedCall(Func &&func, Args &&...args) {
