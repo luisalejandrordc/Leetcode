@@ -5,6 +5,7 @@
 #include <functional>
 #include <iostream>
 #include <iterator>
+#include <optional>
 #include <ranges>
 #include <string>
 #include <string_view>
@@ -14,6 +15,9 @@
 #include <utility>
 #include <vector>
 
+template <typename T> void print(const T &value, bool addNewLine = true);
+
+namespace detail {
 //----------------------------------
 // TYPE TRAIT
 // is_sequence_v condition -> std::vector, std::array, or T[N] (except char[N])
@@ -34,6 +38,35 @@ template <std::size_t N> struct is_sequence<char[N]> : std::false_type {};
 
 template <typename T>
 inline constexpr bool is_sequence_v = is_sequence<T>::value;
+
+//----------------------------------
+// TYPE TRAIT
+// is_unordered_map_v condition -> std::unordered_map
+//----------------------------------
+
+template <typename T> struct is_unordered_map : std::false_type {};
+
+template <typename Key, typename Value, typename Hash, typename Pred,
+          typename Alloc>
+struct is_unordered_map<std::unordered_map<Key, Value, Hash, Pred, Alloc>>
+    : std::true_type {};
+
+template <typename T>
+inline constexpr bool is_unordered_map_v = is_unordered_map<T>::value;
+
+//----------------------------------
+// TYPE TRAIT
+// is_unordered_set_v condition -> std::unordered_set
+//----------------------------------
+
+template <typename T> struct is_unordered_set : std::false_type {};
+
+template <typename Value, typename Hash, typename Pred, typename Alloc>
+struct is_unordered_set<std::unordered_set<Value, Hash, Pred, Alloc>>
+    : std::true_type {};
+
+template <typename T>
+inline constexpr bool is_unordered_set_v = is_unordered_set<T>{};
 
 //----------------------------------
 // TYPE TRAIT
@@ -60,39 +93,10 @@ struct is_pair<std::pair<T1, T2>> : std::true_type {};
 template <typename T> inline constexpr bool is_pair_v = is_pair<T>::value;
 
 //----------------------------------
-// TYPE TRAIT
-// is_unordered_map_v condition -> std::unordered_map
+// PRINT IMPLEMENTATION
 //----------------------------------
 
-template <typename T> struct is_unordered_map : std::false_type {};
-
-template <typename Key, typename Value, typename Hash, typename Pred,
-          typename Alloc>
-struct is_unordered_map<std::unordered_map<Key, Value, Hash, Pred, Alloc>>
-    : std::true_type {};
-
-template <typename T>
-inline constexpr bool is_unordered_map_v = is_unordered_map<T>::value;
-
-//----------------------------------
-// TYPE TRAIT
-// is_unordered_set_v condition -> std::unordered_set
-//----------------------------------
-
-template <typename T> struct is_unordered_set : std::false_type {};
-
-template <typename T>
-struct is_unordered_set<std::unordered_set<T>> : std::true_type {};
-
-template <typename T>
-inline constexpr bool is_unordered_set_v = is_unordered_set<T>{};
-
-//----------------------------------
-// GENERAL PRINT FUNCTION
-//----------------------------------
-template <typename T> inline void print(const T &value, bool addNewLine = true);
-
-template <typename T> inline void print_sequence(const T &sequence) {
+template <typename T> void printSequence(const T &sequence) {
   std::cout << "[";
   for (auto it = std::begin(sequence); it != std::end(sequence); it++) {
     if (it != std::begin(sequence))
@@ -103,7 +107,7 @@ template <typename T> inline void print_sequence(const T &sequence) {
 }
 
 template <typename T1, typename T2>
-inline void print_unordered_map(const std::unordered_map<T1, T2> &map) {
+void printUnorderedMap(const std::unordered_map<T1, T2> &map) {
   std::cout << "{";
   for (auto it = map.begin(); it != map.end(); it++) {
     if (it != map.begin())
@@ -115,8 +119,7 @@ inline void print_unordered_map(const std::unordered_map<T1, T2> &map) {
   std::cout << "}";
 }
 
-template <typename T>
-inline void print_unordered_set(const std::unordered_set<T> &set) {
+template <typename T> void printUnorderedSet(const std::unordered_set<T> &set) {
   std::cout << "{";
   for (auto it = set.begin(); it != set.end(); it++) {
     if (it != set.begin())
@@ -127,7 +130,7 @@ inline void print_unordered_set(const std::unordered_set<T> &set) {
 }
 
 template <typename T1, typename T2>
-inline void print_pair(const std::pair<T1, T2> &pair) {
+void printPair(const std::pair<T1, T2> &pair) {
   std::cout << "(";
   print(pair.first, false);
   std::cout << ", ";
@@ -135,25 +138,29 @@ inline void print_pair(const std::pair<T1, T2> &pair) {
   std::cout << ")";
 }
 
-template <typename T>
-inline void print_optional(const std::optional<T> &optional) {
+template <typename T> void printOptional(const std::optional<T> &optional) {
   if (optional.has_value())
     print(*optional);
   else
     std::cout << "none";
 }
+} // namespace detail
 
-template <typename T> inline void print(const T &value, bool addNewLine) {
-  if constexpr (is_sequence_v<T>)
-    print_sequence(value);
-  else if constexpr (is_unordered_map_v<T>)
-    print_unordered_map(value);
-  else if constexpr (is_unordered_set_v<T>)
-    print_unordered_set(value);
-  else if constexpr (is_pair_v<T>)
-    print_pair(value);
-  else if constexpr (is_optional_v<T>)
-    print_optional(value);
+//----------------------------------
+// GENERAL PRINT FUNCTION
+//----------------------------------
+
+template <typename T> void print(const T &value, bool addNewLine) {
+  if constexpr (detail::is_sequence_v<T>)
+    detail::printSequence(value);
+  else if constexpr (detail::is_unordered_map_v<T>)
+    detail::printUnorderedMap(value);
+  else if constexpr (detail::is_unordered_set_v<T>)
+    detail::printUnorderedSet(value);
+  else if constexpr (detail::is_pair_v<T>)
+    detail::printPair(value);
+  else if constexpr (detail::is_optional_v<T>)
+    detail::printOptional(value);
   else
     std::cout << value;
 
@@ -177,7 +184,7 @@ inline void printTitle(const std::string &title) {
 //----------------------------------
 
 template <typename Func, typename... Args>
-inline auto timedCall(Func &&func, Args &&...args) {
+auto timedCall(Func &&func, Args &&...args) {
   auto start = std::chrono::steady_clock::now();
   auto result =
       std::invoke(std::forward<Func>(func), std::forward<Args>(args)...);
@@ -187,6 +194,10 @@ inline auto timedCall(Func &&func, Args &&...args) {
   std::cout << "Execution time: " << elapsed.count() << " us" << std::endl;
   return result;
 }
+
+//----------------------------------
+// PAIR HASH FUNCTION
+//----------------------------------
 
 template <typename T1, typename T2> struct PairHash {
   std::size_t operator()(const std::pair<T1, T2> &p) const {
