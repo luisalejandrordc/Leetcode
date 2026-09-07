@@ -36,7 +36,7 @@ struct ListNode {
 
 template <std::ranges::input_range Range>
   requires std::same_as<std::ranges::range_value_t<Range>, int>
-inline ListNode *createLinkedList(const Range &values) {
+inline ListNode *toLinkedList(const Range &values) {
   ListNode *dummy = new ListNode();
   ListNode *curr = dummy;
   for (const int &x : values) {
