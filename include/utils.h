@@ -139,9 +139,9 @@ void printPair(const std::pair<T1, T2> &pair) {
 
 template <typename T> void printOptional(const std::optional<T> &optional) {
   if (optional.has_value())
-    print(*optional);
+    print(*optional, false);
   else
-    std::cout << "none";
+    std::cout << "null";
 }
 } // namespace detail
 

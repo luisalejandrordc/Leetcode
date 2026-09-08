@@ -1,6 +1,8 @@
+#include "../../include/binary_tree.h"
 #include "../../include/doubly_linked_list.h"
 #include "../../include/singly_linked_list.h"
 #include "../../include/utils.h"
+#include <optional>
 #include <vector>
 
 // class Solution {
@@ -22,5 +24,13 @@ int main() {
   while (curr->next != nullptr)
     curr = curr->next;
   curr->print(false);
+
+  std::vector<std::optional<int>> new_nums = {
+      1, 2, 3, std::nullopt, 4, std::nullopt, 5};
+  TreeNode *root = toBinaryTree(new_nums);
+  std::vector<std::optional<int>> res = root->toVector();
+  print(res);
+  root->print();
+
   return 0;
 }
