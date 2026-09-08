@@ -5,30 +5,23 @@
 class Solution {
 public:
   ListNode *mergeNodes(ListNode *head) {
-    ListNode *merged = nullptr;
-    ListNode *curr;
+    ListNode *dummy = new ListNode();
+    ListNode *curr = dummy;
     bool newNode;
     while (head != nullptr) {
       if (head->val != 0) {
-        if (merged == nullptr) {
-          merged = head;
+        if (newNode) {
+          curr->next = head;
           curr = head;
           newNode = false;
-        } else {
-          if (newNode) {
-            curr->next = head;
-            curr = head;
-            newNode = false;
-          } else
-            curr->val += head->val;
-        }
+        } else
+          curr->val += head->val;
       } else
         newNode = true;
       head = head->next;
     }
-    if (curr != nullptr)
-      curr->next = nullptr;
-    return merged;
+    curr->next = nullptr;
+    return dummy->next;
   }
 };
 
